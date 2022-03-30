@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import { FC, ReactNode } from "react";
+import PlayerBar from "./PlayerBar";
 import Sidebar from "./Sidebar";
 
 const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
@@ -9,11 +10,11 @@ const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <Sidebar />
       </Box>
       {/* Make sure that content is not render under side and bottom bar */}
-      <Box marginLeft="250px" marginBottom="100">
+      <Box marginLeft="250px" marginBottom="100" height="calc(100vh - 100px)">
         {children}
       </Box>
       <Box position="absolute" left="0" bottom="0">
-        player
+        <PlayerBar />
       </Box>
     </Box>
   );
