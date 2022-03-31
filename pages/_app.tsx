@@ -4,7 +4,7 @@ import { AppProps } from "next/app";
 import { FC } from "react";
 import "reset-css";
 import PlayerLayout from "../components/PlayerLayout";
-import { store } from "../lib/store";
+import appStore from "../lib/store";
 
 const theme = extendTheme({
   colors: {
@@ -44,7 +44,7 @@ interface ExtendedAppProps {
 const MyApp: FC<ExtendedAppProps> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
-      <StoreProvider store={store}>
+      <StoreProvider store={appStore}>
         {Component.authPage ? (
           <Component {...pageProps} />
         ) : (

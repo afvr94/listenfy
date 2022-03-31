@@ -3,10 +3,19 @@ import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from "@chakra-ui/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FC } from "react";
-import { Song } from "@prisma/client";
+import { useStoreActions } from "../lib/store";
+import { CustomSong } from "../types";
 import { formatDate, formatTime } from "../lib/formatters";
 
-const SongsTable: FC<{ songs: Song[] }> = ({ songs }) => {
+const SongsTable: FC<{ songs: CustomSong[] }> = ({ songs }) => {
+  const setActiveSongs = useStoreActions((store) => store.changeActiveSongs);
+  const setActiveSong = useStoreActions((store) => store.changeActiveSong);
+
+  const handleOnPlay = (activeSong: CustomSong | null = null) => {
+    setActiveSong(activeSong || songs[0]);
+    setActiveSongs(songs);
+  };
+
   return (
     <Box bg="transparent" color="white">
       <Box padding="10px" marginBottom="20px">
@@ -17,6 +26,7 @@ const SongsTable: FC<{ songs: Song[] }> = ({ songs }) => {
             size="lg"
             isRound
             aria-label="play"
+            onClick={() => handleOnPlay()}
           />
         </Box>
 
@@ -42,8 +52,9 @@ const SongsTable: FC<{ songs: Song[] }> = ({ songs }) => {
                   "&:hover": {
                     bg: "rgba(255, 255, 255, 0.1)",
                   },
-                  cursor: "pointer",
                 }}
+                cursor="pointer"
+                onClick={() => handleOnPlay(song)}
                 key={song.id}
               >
                 <Td>{index + 1}</Td>

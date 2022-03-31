@@ -1,10 +1,11 @@
-import { Playlist as PlaylistType, Song } from "@prisma/client";
+import { Playlist as PlaylistType } from "@prisma/client";
 import { GetServerSideProps } from "next/types";
 import { FC } from "react";
 import GradientLayout from "../../components/GradientLayout";
 import SongsTable from "../../components/SongsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
+import { CustomSong } from "../../types";
 
 const getBGColor = (id: number) => {
   const colors = [
@@ -22,7 +23,7 @@ const getBGColor = (id: number) => {
 };
 
 interface CustomPlaylistType extends PlaylistType {
-  songs: Song[];
+  songs: CustomSong[];
 }
 
 const Playlist: FC<{ playlist: CustomPlaylistType }> = ({ playlist }) => {
